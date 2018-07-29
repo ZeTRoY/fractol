@@ -1,2 +1,2 @@
 # fractol
-A Fract'ol project of school 42 represents fractals
+Here will be some info in the nearest future...
