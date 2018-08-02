@@ -6,11 +6,17 @@
 /*   By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/29 20:10:17 by aroi              #+#    #+#             */
-/*   Updated: 2018/08/02 12:41:09 by aroi             ###   ########.fr       */
+/*   Updated: 2018/08/02 17:38:30 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+int			error(char *str)
+{
+	ft_printf("{red}%s{eoc}\n", str);
+	return (1);
+}
 
 t_img		new_img(t_fractol *fractol)
 {
@@ -20,6 +26,16 @@ t_img		new_img(t_fractol *fractol)
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.size, &img.endian);
 	img.bpp /= 8;
 	return (img);
+}
+
+void		usage(void)
+{
+	ft_printf("       {red}Usage:{eoc}\n./fractol mandelbrot\n");
+	ft_printf("./fractol julia\n./fractol mandelbar\n./fractol heartbrot\n");
+	ft_printf("./fractol dualbrot\n./fractol \"great axe\"\n./fractol pentabrot\n");
+	ft_printf("./fractol eggs\n./fractol \"burning ship\"\n./fractol \"penta burn\"\n");
+	ft_printf("\nYou should write {red}one{eoc}, {red}two{eoc} or {red}three{eoc} parametrs, but no more and no less!\n");
+	exit(1);
 }
 
 int		set_penta_burn(t_fractol *fractol, int i, int j)
@@ -375,6 +391,8 @@ void		lets_paint(t_fractol *fractol)
 				iterations = set_burning_ship(fractol, i, j);
 			else if (ft_strequ(fractol->name, "penta burn"))
 				iterations = set_penta_burn(fractol, i, j);
+			else
+				usage();
 			if (i >= 0 && i < WIDTH && j >= 0 && j < HEIGHT)
 					*(int *)(fractol->img.addr + i * fractol->img.bpp + j * fractol->img.size) = rgb(iterations, fractol);
 			i++;
@@ -435,11 +453,6 @@ t_fractol	*new_fractol(char *str)
 	return (fractol);
 }
 
-int			error(char *str)
-{
-	ft_printf("{red}%s{eoc}\n", str);
-	return (1);
-}
 
 int		ft_exit(void)
 {
@@ -451,13 +464,13 @@ int	key_mapping(int key, t_fractol *fractol)
 	if (key == MACOS_ESC)
 		ft_exit();
 	else if (key == MACOS_W)
-		fractol->movey -= 0.05;
+		fractol->movey -= 0.05 / fractol->zoom;
 	else if (key == MACOS_S)
-		fractol->movey += 0.05;
+		fractol->movey += 0.05 / fractol->zoom;
 	else if (key == MACOS_A)
-		fractol->movex += 0.05;
+		fractol->movex += 0.05 / fractol->zoom;
 	else if (key == MACOS_D)
-		fractol->movex -= 0.05;
+		fractol->movex -= 0.05 / fractol->zoom;
 	else if (key == MACOS_SPACE)
 		fractol->mouseon *= -1;
 	mlx_clear_window(fractol->mlx, fractol->win);
@@ -472,16 +485,16 @@ int	key_mapping(int key, t_fractol *fractol)
 // 	int		y;
 // 	t_iter	ret;
 
-// 	fractol.d_zoom_x = fractol.zoomx * WIDTH / (2.7);
-// 	fractol.d_zoom_y = fractol.zoomy * HEIGHT / (2.4);
+// 	fractol->d_zoom_x = fractol->zoom * WIDTH / (2.7);
+// 	fractol->d_zoom_y = fractol->zoom * HEIGHT / (2.4);
 // 	y = -1;
 // 	while (++y < HEIGHT)
 // 	{
 // 		x = -1;
 // 		while (++x < WIDTH)
 // 		{
-// 			ret = w.fractalft(x, y, w);
-// 			mlx_pixel_put_img(&w, x, y, w.colorft(ret, w.itermax));
+// 			// ret = w.fractalft(x, y, w);
+// 			// mlx_pixel_put_img(&w, x, y, w.colorft(ret, w.itermax));
 // 		}
 // 	}
 // }
@@ -494,26 +507,6 @@ int	key_mapping(int key, t_fractol *fractol)
 // 	fractol->centery = y;
 // }
 
-// void	draw_fractal(t_fractol *fractol)
-// {
-// 	int		x;
-// 	int		y;
-// 	t_iter	ret;
-
-// 	fractol.d_zoom_x = fractol.zoomx * WIDTH / 2.7;
-// 	fractol.d_zoom_y = fractol.zoomy * HEIGHT / 2.4;
-// 	y = -1;
-// 	while (++y < WIN_H)
-// 	{
-// 		x = -1;
-// 		while (++x < WIN_W)
-// 		{
-// 			ret = w.fractalft(x, y, w);
-// 			mlx_pixel_put_img(&w, x, y, w.colorft(ret, w.itermax));
-// 		}
-// 	}
-// }
-
 // void	redraw_fractal(t_fractol *fractol)
 // {
 // 	draw_fractal(fractol);
@@ -521,37 +514,36 @@ int	key_mapping(int key, t_fractol *fractol)
 // 	mlx_do_sync(fractol->mlx);
 // }
 
+
 int			mouse_controls(int mousebutton, int x, int y, t_fractol *fractol)
 {
 	double re;
 	double im;
-	double interpolation;
-	
-	re = (double)x / WIDTH * (fractol->complex.max_re - fractol->complex.min_re) + fractol->complex.min_re;
-	im = (double)y / HEIGHT * (fractol->complex.max_im - fractol->complex.min_im) + fractol->complex.min_im;
+	double k;
+
+	re = (double)x * (fractol->complex.max_re - fractol->complex.min_re) / WIDTH + fractol->complex.min_re;
+	im = (double)y * (fractol->complex.max_im - fractol->complex.min_im) / HEIGHT + fractol->complex.min_im;
 	if (mousebutton == SCROLL_DOWN || mousebutton == SCROLL_UP)
 	{
 		if (mousebutton == SCROLL_DOWN)
 		{
-			// zoom_to_center(fractol, x, y);
-			fractol->zoom /= 1.1;
-				fractol->depth -= 3;
-			// zoom_to_center(fractol, WIDTH / 2, HEIGHT / 2);
+			k = 0.9;
+			fractol->zoom *= k;
+			fractol->depth -= 3;
 		}
 		else if (mousebutton == SCROLL_UP)
 		{
-			// zoom_to_center(fractol, x, y);
-			fractol->zoom *= 1.1;
-				fractol->depth += 3;
-			// zoom_to_center(fractol, WIDTH / 2, HEIGHT / 2);
+			k = 1.1;
+			fractol->zoom *= k;
+			fractol->depth += 3;
 		}
 		// fractol->complex.min_re = re - (double)x / WIDTH * fractol->complex.dre;
 		// fractol->complex.min_re = im - (double)y / HEIGHT * fractol->complex.dre;
 		
-		// fractol->complex.min_re = INTERPOLATE(re, fractol->complex.min_re, 1.0 / 1.1);
-		// fractol->complex.min_im = INTERPOLATE(im, fractol->complex.min_im, 1.0 / 1.1);
-		// fractol->complex.max_re = INTERPOLATE(re, fractol->complex.max_re, 1.0 / 1.1);
-		// fractol->complex.max_im = INTERPOLATE(im, fractol->complex.max_im, 1.0 / 1.1);
+		fractol->complex.min_re = fractol->complex.min_re * k + re * (1 - k);
+		fractol->complex.max_re = fractol->complex.max_re * k + re * (1 - k);
+		fractol->complex.min_im = fractol->complex.min_im * k + im * (1 - k);
+		fractol->complex.max_im = fractol->complex.max_im * k + im * (1 - k);
 	}
 	mlx_clear_window(fractol->mlx, fractol->win);
 	ft_bzero((void *)fractol->img.addr, fractol->img.size * HEIGHT);
@@ -572,27 +564,29 @@ int			move_with_mouse(int x, int y, t_fractol *fractol)
 	return (1);
 }
 
-void		usage(void)
-{
-	ft_printf("       {red}Usage:{eoc}\n./fractol mandelbrot\n\tor\n");
-	ft_printf("./fractol julia\n./fractol mandelbar\n./fractol heartbrot\n");
-	ft_printf("./fractol fualbrot\n./fractol \"great axe\"\n./fractol pentabrot\n");
-	ft_printf("./fractol eggs\n./fractol \"burning ship\"\n./fractol \"penta burn\"\n");
-	exit(1);
-	
-}
-
 void		init_window(char *str)
 {
 	t_fractol	*fractol;
 	
 	fractol = new_fractol(str);
+	ft_printf("\n...initializing {yellow}%s{eoc}...\n", fractol->name);
 	initialize_threads(fractol);
 	mlx_hook(fractol->win, 2, 0, key_mapping, fractol);
 	mlx_hook(fractol->win, 17, 0, ft_exit, (void *)0);
 	mlx_hook(fractol->win, 6, 5, move_with_mouse, fractol);
 	mlx_mouse_hook(fractol->win, mouse_controls, fractol);
 	mlx_loop(fractol->mlx);
+}
+
+int			is_right_name(char *str)
+{
+	if (!ft_strequ(str, "julia") && !ft_strequ(str, "mandelbrot") &&
+		!ft_strequ(str, "mandelbar") && !ft_strequ(str, "heartbrot") &&
+		!ft_strequ(str, "dualbrot") && !ft_strequ(str, "great axe") &&
+		!ft_strequ(str, "pentabrot") && !ft_strequ(str, "eggs") &&
+		!ft_strequ(str, "burning ship") && !ft_strequ(str, "penta burn"))
+		return (0);
+	return (1);
 }
 
 int			main(int argc, char **argv)
@@ -604,14 +598,40 @@ int			main(int argc, char **argv)
 	i = 0;
 	k = 0;
 	id[0] = 55;
-	if (argc == 1 || argc > 3)
+	id[1] = 56;
+	if (argc == 1 || argc > 4)
 		usage();
 	if (argc > 2)
 		id[0] = fork();
 	if (id[0] > 0)
+	{
+		if ((!is_right_name(argv[1]) || !is_right_name(argv[2])) && !is_right_name(argv[3]))
+			wait(0);
+		// if (argv[3] && !is_right_name(argv[3]))
+		// 	wait(0);
+		if (!is_right_name(argv[1]))
+			usage();
 		init_window(argv[1]);
+	}
 	else
-		init_window(argv[2]);
+	{
+		if (argc > 3)
+			id[1] = fork();
+		if (id[1] > 0)
+		{
+			if (!is_right_name(argv[2]) || !is_right_name(argv[3]))
+				wait(0);
+			if (!is_right_name(argv[2]))
+				usage();
+			init_window(argv[2]);
+		}
+		else
+		{
+			if (!is_right_name(argv[3]))
+				usage();
+			init_window(argv[3]);
+		}
+	}
 	return (0);
 }
 
