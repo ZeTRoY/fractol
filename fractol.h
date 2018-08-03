@@ -6,7 +6,7 @@
 /*   By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/30 09:58:20 by aroi              #+#    #+#             */
-/*   Updated: 2018/08/03 19:47:20 by aroi             ###   ########.fr       */
+/*   Updated: 2018/08/03 23:03:21 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,20 @@
 # define MACOS_V 9
 # define MACOS_B 11
 # define MACOS_N 45
+# define MACOS_M 46
 # define SCROLL_DOWN 5
 # define SCROLL_UP 4
 # define MACOS_SPACE 49
 # define MACOS_BACKSPACE 51
+# define MACOS_MINUS 78
+# define MACOS_PLUS 69
+# define MACOS_MINUS2 27
+# define MACOS_EQ 24
 
-# define INTERPOLATE(start, end, inerpolation) start + (end - start) * interpolation
-
-# define OFFSETX_SHRINK(x) (double)(-1 * ((double)(x) / WIDTH) * (2.7))
-# define OFFSETY_SHRINK(y) (double)(     ((double)(y) / HEIGHT) * (2.4))
-# define OFFSETX_DEPLOY(x) (int)((x * WIDTH) / (2.7) * -1)
-# define OFFSETY_DEPLOY(y) (int)((y * HEIGHT) / (2.4))
-
-#include "libft.h"
-#include "mlx.h"
-#include <math.h>
-#include <pthread.h>
+# include "libft.h"
+# include "mlx.h"
+# include <math.h>
+# include <pthread.h>
 
 typedef struct		s_z
 {
@@ -92,5 +90,30 @@ typedef struct		s_mlx
 	void			*mlx;
 	t_fractol		fractol[3];
 }					t_mlx;
+
+int					error(char *str);
+int					key_mapping(int key, t_fractol *fractol);
+void				reset(t_fractol *fractol);
+int					mouse_controls(int mousebutton, int x, int y,
+						t_fractol *fractol);
+int					move_with_mouse(int x, int y, t_fractol *fractol);
+void				init_window(char *str);
+void				initialize_threads(t_fractol *fractol);
+void				choose_color(int *color, int iterations,
+						t_fractol *fractol);
+int					rgb_log(int iter, t_fractol *fractol);
+int					rgb_log2(int iter, t_fractol *fractol);
+int					set_mandelbrot(t_fractol *fractol, int i, int j);
+int					set_julia(t_fractol *fractol, int i, int j);
+int					set_duobrot(t_fractol *fractol, int i, int j);
+int					set_mandelbar(t_fractol *fractol, int i, int j);
+int					set_pentabrot(t_fractol *fractol, int i, int j);
+int					set_greataxe(t_fractol *fractol, int i, int j);
+int					set_heart(t_fractol *fractol, int i, int j);
+int					set_heartjulia(t_fractol *fractol, int i, int j);
+int					set_eggs(t_fractol *fractol, int i, int j);
+int					set_burning_ship(t_fractol *fractol, int i, int j);
+int					set_penta_burn(t_fractol *fractol, int i, int j);
+int					set_pentajulia(t_fractol *fractol, int i, int j);
 
 #endif
