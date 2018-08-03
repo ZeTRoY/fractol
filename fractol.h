@@ -6,7 +6,7 @@
 /*   By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/30 09:58:20 by aroi              #+#    #+#             */
-/*   Updated: 2018/08/02 09:44:34 by aroi             ###   ########.fr       */
+/*   Updated: 2018/08/03 19:47:20 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,23 @@
 
 # define WIDTH 800
 # define HEIGHT 600
+# define THREAD_QNT 8
 
 # define MACOS_ESC 53
 # define MACOS_W 13
 # define MACOS_A 0
 # define MACOS_S 1
 # define MACOS_D 2
+# define MACOS_Z 6
+# define MACOS_X 7
+# define MACOS_C 8
+# define MACOS_V 9
+# define MACOS_B 11
+# define MACOS_N 45
 # define SCROLL_DOWN 5
 # define SCROLL_UP 4
 # define MACOS_SPACE 49
+# define MACOS_BACKSPACE 51
 
 # define INTERPOLATE(start, end, inerpolation) start + (end - start) * interpolation
 
@@ -44,6 +52,7 @@ typedef struct		s_z
 	double			c_re;
 	double			c_im;
 	double			z;
+	double			delta;
 	double			min_re;
 	double			min_im;
 	double			max_re;
@@ -70,14 +79,12 @@ typedef struct		s_fractol
 	t_z				complex;
 	int				depth;
 	int				counter;
-	double				zoom;
-	double			movex;
-	double			movey;
 	int				mousex;
 	int				mousey;
+	double			jmousex;
+	double			jmousey;
 	int				mouseon;
-	double			centerx;
-	double			centery;
+	int				color;
 }					t_fractol;
 
 typedef struct		s_mlx
