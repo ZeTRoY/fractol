@@ -6,7 +6,7 @@
 #    By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/30 15:24:05 by aroi              #+#    #+#              #
-#    Updated: 2018/08/03 23:14:58 by aroi             ###   ########.fr        #
+#    Updated: 2018/08/04 14:27:53 by aroi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,21 +19,25 @@ SRC		=	main.c \
 			color1.c \
 			color2.c \
 			draw_fractals.c \
+			draw_info_table.c \
 			init_and_create.c \
 			key_mouse_mapping.c \
+			key_mapping_2.c \
 			set_burning_ship.c \
 			set_julia.c \
-			set_mundelbrot.c
+			set_mandelbrot.c
 
 OBJ		=	main.o \
 			color1.o \
 			color2.o \
 			draw_fractals.o \
+			draw_info_table.o \
 			init_and_create.o \
 			key_mouse_mapping.o \
+			key_mapping_2.o \
 			set_burning_ship.o \
 			set_julia.o \
-			set_mundelbrot.o
+			set_mandelbrot.o
 
 %.o: %.c
 	@$(CC) -c -o $@ $< -I libft

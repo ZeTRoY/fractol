@@ -6,7 +6,7 @@
 /*   By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/03 22:42:08 by aroi              #+#    #+#             */
-/*   Updated: 2018/08/03 23:08:58 by aroi             ###   ########.fr       */
+/*   Updated: 2018/08/04 11:20:25 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,6 @@ void			choose_color(int *color, int iterations, t_fractol *fractol)
 		*color = rgb_log(iterations, fractol);
 	else if (fractol->color == 5)
 		*color = rgb_log2(iterations, fractol);
+	else if (fractol->color == 6)
+		*color = rgb_psycho(iterations, fractol);
 }

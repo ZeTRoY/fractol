@@ -6,7 +6,7 @@
 /*   By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/03 22:23:31 by aroi              #+#    #+#             */
-/*   Updated: 2018/08/03 23:12:30 by aroi             ###   ########.fr       */
+/*   Updated: 2018/08/04 12:12:22 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static void		change_color(int key, t_fractol *fractol)
 		fractol->color = 4;
 	if (key == MACOS_N)
 		fractol->color = 5;
+	if (key == MACOS_M)
+		fractol->color = 6;
 }
 
 int				key_mapping(int key, t_fractol *fractol)
@@ -51,17 +53,10 @@ int				key_mapping(int key, t_fractol *fractol)
 	else if (key == MACOS_S)
 		fractol->complex.min_im -= 0.05 * fractol->complex.delta;
 	else if (key == MACOS_A)
-		fractol->complex.min_re -= 0.05 * fractol->complex.delta;
-	else if (key == MACOS_D)
 		fractol->complex.min_re += 0.05 * fractol->complex.delta;
-	else if (key == MACOS_SPACE)
-		fractol->mouseon *= -1;
-	else if (key == MACOS_BACKSPACE)
-		reset(fractol);
-	else if (key == MACOS_PLUS || key == MACOS_EQ)
-		fractol->depth += 5;
-	else if (key == MACOS_MINUS || key == MACOS_MINUS2)
-		fractol->depth -= 5;
+	else if (key == MACOS_D)
+		fractol->complex.min_re -= 0.05 * fractol->complex.delta;
+	key_mapping_2(key, fractol);
 	change_color(key, fractol);
 	mlx_clear_window(fractol->mlx, fractol->win);
 	ft_bzero((void *)fractol->img.addr, fractol->img.size * HEIGHT);

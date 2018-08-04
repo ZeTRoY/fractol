@@ -6,9 +6,11 @@
 /*   By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/03 22:56:28 by aroi              #+#    #+#             */
-/*   Updated: 2018/08/03 23:13:20 by aroi             ###   ########.fr       */
+/*   Updated: 2018/08/04 10:26:42 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "fractol.h"
 
 int		set_penta_burn(t_fractol *fractol, int i, int j)
 {

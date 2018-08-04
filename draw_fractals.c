@@ -6,7 +6,7 @@
 /*   By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/03 22:36:30 by aroi              #+#    #+#             */
-/*   Updated: 2018/08/03 23:16:10 by aroi             ###   ########.fr       */
+/*   Updated: 2018/08/04 14:56:24 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 static int		choose_a_fractal(t_fractol *fractol, int i, int j)
 {
-	if (ft_strequ(fractol->name, "mandelbrot"))
+	if (fractol->fractal_number == 1)
 		return (set_mandelbrot(fractol, i, j));
-	else if (ft_strequ(fractol->name, "julia"))
+	else if (fractol->fractal_number == 2)
 		return (set_julia(fractol, i, j));
-	else if (ft_strequ(fractol->name, "mandelbar"))
+	else if (fractol->fractal_number == 3)
 		return (set_mandelbar(fractol, i, j));
-	else if (ft_strequ(fractol->name, "heartbrot"))
+	else if (fractol->fractal_number == 4)
 		return (set_heart(fractol, i, j));
-	else if (ft_strequ(fractol->name, "dualbrot"))
-		return (set_duobrot(fractol, i, j));
-	else if (ft_strequ(fractol->name, "great axe"))
+	else if (fractol->fractal_number == 5)
+		return (set_dualbrot(fractol, i, j));
+	else if (fractol->fractal_number == 6)
 		return (set_greataxe(fractol, i, j));
-	else if (ft_strequ(fractol->name, "pentabrot"))
+	else if (fractol->fractal_number == 7)
 		return (set_pentabrot(fractol, i, j));
-	else if (ft_strequ(fractol->name, "eggs"))
+	else if (fractol->fractal_number == 8)
 		return (set_eggs(fractol, i, j));
-	else if (ft_strequ(fractol->name, "burning ship"))
+	else if (fractol->fractal_number == 9)
 		return (set_burning_ship(fractol, i, j));
-	else if (ft_strequ(fractol->name, "penta burn"))
+	else if (fractol->fractal_number == 10)
 		return (set_penta_burn(fractol, i, j));
-	else if (ft_strequ(fractol->name, "pentajulia"))
-		return (set_pentajulia(fractol, i, j));
-	else if (ft_strequ(fractol->name, "heartjulia"))
+	else if (fractol->fractal_number == 11)
 		return (set_heartjulia(fractol, i, j));
+	else if (fractol->fractal_number == 12)
+		return (set_pentajulia(fractol, i, j));
 	return (-1);
 }
 
@@ -87,4 +87,10 @@ void			initialize_threads(t_fractol *fractol)
 		pthread_join(tid[i], NULL);
 	mlx_put_image_to_window(fractol->mlx, fractol->win,
 		fractol->img.img, 0, 0);
+	if (fractol->info > 0)
+		draw_info_table(fractol);
+	mlx_string_put(fractol->mlx, fractol->win, 10, 10, 0xFF0000,
+		"Max iterations: ");
+	mlx_string_put(fractol->mlx, fractol->win, 165, 10, 0xFF0000,
+		ft_itoa(fractol->depth));
 }

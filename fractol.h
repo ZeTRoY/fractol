@@ -6,7 +6,7 @@
 /*   By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/30 09:58:20 by aroi              #+#    #+#             */
-/*   Updated: 2018/08/03 23:03:21 by aroi             ###   ########.fr       */
+/*   Updated: 2018/08/04 14:26:40 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,20 @@
 # define MACOS_PLUS 69
 # define MACOS_MINUS2 27
 # define MACOS_EQ 24
+# define MACOS_H 4
+
+# define MACOS_ONE 18
+# define MACOS_TWO 19
+# define MACOS_THREE 20
+# define MACOS_FOUR 21
+# define MACOS_FIVE 23
+# define MACOS_SIX 22
+# define MACOS_SEVEN 26
+# define MACOS_EIGHT 28
+# define MACOS_NINE 25
+# define MACOS_TEN 29
+# define MACOS_ONE_PAD 83
+# define MACOS_TWO_PAD 84
 
 # include "libft.h"
 # include "mlx.h"
@@ -83,6 +97,8 @@ typedef struct		s_fractol
 	double			jmousey;
 	int				mouseon;
 	int				color;
+	int				info;
+	int				fractal_number;
 }					t_fractol;
 
 typedef struct		s_mlx
@@ -93,6 +109,7 @@ typedef struct		s_mlx
 
 int					error(char *str);
 int					key_mapping(int key, t_fractol *fractol);
+void				key_mapping_2(int key, t_fractol *fractol);
 void				reset(t_fractol *fractol);
 int					mouse_controls(int mousebutton, int x, int y,
 						t_fractol *fractol);
@@ -103,9 +120,10 @@ void				choose_color(int *color, int iterations,
 						t_fractol *fractol);
 int					rgb_log(int iter, t_fractol *fractol);
 int					rgb_log2(int iter, t_fractol *fractol);
+int					rgb_psycho(int iter, t_fractol *fractol);
 int					set_mandelbrot(t_fractol *fractol, int i, int j);
 int					set_julia(t_fractol *fractol, int i, int j);
-int					set_duobrot(t_fractol *fractol, int i, int j);
+int					set_dualbrot(t_fractol *fractol, int i, int j);
 int					set_mandelbar(t_fractol *fractol, int i, int j);
 int					set_pentabrot(t_fractol *fractol, int i, int j);
 int					set_greataxe(t_fractol *fractol, int i, int j);
@@ -115,5 +133,6 @@ int					set_eggs(t_fractol *fractol, int i, int j);
 int					set_burning_ship(t_fractol *fractol, int i, int j);
 int					set_penta_burn(t_fractol *fractol, int i, int j);
 int					set_pentajulia(t_fractol *fractol, int i, int j);
+void				draw_info_table(t_fractol *fractol);
 
 #endif
