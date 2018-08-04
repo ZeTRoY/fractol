@@ -1,5 +1,6 @@
 <h1 align="center">Fract'ol</h1>
-<h2 align="center">A 42 School Project</h2>
+
+					A 42 School Project
 
 <h1 align="center">Description</h1>
 
@@ -58,7 +59,6 @@ You can change color palette by pressing apropriate button:
 Also you can change fractals in your window by pressing:
 
 	'1' for Mandelbrot
-
 	'2' for Julia
 	'3' for Mandelbar
 	'4' for heart (I named it Heartbrot)
