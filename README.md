@@ -29,6 +29,8 @@ After that you should use:
 
 to see the command list. Also you can open up to three windows with different fractals!
 
+![Picture](https://github.com/ZeTRoY/fractol/blob/master/Images/Usage.png?raw=true)
+
 My program can zoom in and zoom out with mouse scroll to/from your mouse point.
 Zooming increases maximum quantity of iterations, also you can do it just by pressing '+' button.  
 
