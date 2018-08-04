@@ -6,13 +6,25 @@
 /*   By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/04 14:26:50 by aroi              #+#    #+#             */
-/*   Updated: 2018/08/04 15:30:10 by aroi             ###   ########.fr       */
+/*   Updated: 2018/08/04 17:24:34 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void		draw_colors(void *mlx, void *win, int color)
+static void		output_key_keys(void *mlx, void *win, int color)
+{
+	mlx_string_put(mlx, win, WIDTH - 160, 10, color,
+		"MOVE : W A S D");
+	mlx_string_put(mlx, win, WIDTH - 160, 32, color,
+		"ITER : + -");
+	mlx_string_put(mlx, win, WIDTH - 250, 54, color,
+		"TURN ON JULIA : SPACE");
+	mlx_string_put(mlx, win, WIDTH - 170, 76, color,
+		"RESET : BACKSPACE");
+}
+
+static void		output_colors(void *mlx, void *win, int color)
 {
 	mlx_string_put(mlx, win, 10, HEIGHT - 190 - 10, color, "COLORS");
 	mlx_string_put(mlx, win, 10, HEIGHT - 154 - 10, color, "BLACK'n'WHITE: Z");
@@ -24,7 +36,7 @@ void		draw_colors(void *mlx, void *win, int color)
 	mlx_string_put(mlx, win, 10, HEIGHT - 22 - 10, color, "LIGHT PURPLE?: M");
 }
 
-void		draw_fractals(void *mlx, void *win, int color)
+static void		output_fractals(void *mlx, void *win, int color)
 {
 	mlx_string_put(mlx, win, WIDTH - 213, HEIGHT - 264 - 10, color,
 		"MANDELBROT  : 1");
@@ -52,7 +64,7 @@ void		draw_fractals(void *mlx, void *win, int color)
 		"PENTAJULIA  : 2(PAD)");
 }
 
-void		draw_info_table(t_fractol *fractol)
+void			draw_info_table(t_fractol *fractol)
 {
 	int color;
 
@@ -64,18 +76,13 @@ void		draw_info_table(t_fractol *fractol)
 	else if (fractol->color == 3)
 		color = 0xFFFFFF;
 	if (fractol->info == 1)
-	{
-		mlx_string_put(fractol->mlx, fractol->win, WIDTH - 150, 10, color,
-			"MOVE : W A S D");
-		mlx_string_put(fractol->mlx, fractol->win, WIDTH - 150, 32, color,
-			"ITER : + -");
-	}
+		output_key_keys(fractol->mlx, fractol->win, color);
 	else if (fractol->info == 2)
-		draw_colors(fractol->mlx, fractol->win, color);
+		output_colors(fractol->mlx, fractol->win, color);
 	else
 	{
 		mlx_string_put(fractol->mlx, fractol->win, WIDTH - 213,
 			HEIGHT - 300 - 10, color, "FRACTALS");
-		draw_fractals(fractol->mlx, fractol->win, color);
+		output_fractals(fractol->mlx, fractol->win, color);
 	}
 }

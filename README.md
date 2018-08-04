@@ -1,10 +1,11 @@
 <h1 align="center">Fract'ol</h1>
 
-					A 42 School Project
+						A 42 School Project
 
 <h1 align="center">Description</h1>
 
-<strong align="center">So what is this project about?</strong>  
+<strong align="right">So what is this project about?</strong>
+
 <h2 align="center">What is a fractal?</h1>
 
 	The term fractal was first used by mathematician Benoit Mandelbrot in 1974,
