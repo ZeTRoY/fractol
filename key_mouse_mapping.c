@@ -6,7 +6,7 @@
 /*   By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/03 22:23:31 by aroi              #+#    #+#             */
-/*   Updated: 2018/08/05 16:42:17 by aroi             ###   ########.fr       */
+/*   Updated: 2018/08/05 18:34:04 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static void		change_color(int key, t_fractol *fractol)
 
 int				key_mapping(int key, t_fractol *fractol)
 {
-	system("leaks fractol");
 	if (key == MACOS_ESC)
 		exit(0);
 	else if (key == MACOS_W)
