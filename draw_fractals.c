@@ -6,7 +6,7 @@
 /*   By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/03 22:36:30 by aroi              #+#    #+#             */
-/*   Updated: 2018/08/04 14:56:24 by aroi             ###   ########.fr       */
+/*   Updated: 2018/08/05 16:40:12 by aroi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,21 @@ static void		lets_paint(t_fractol *fractol)
 	}
 }
 
+static void		draw_image_and_iter(t_fractol *fractol)
+{
+	char *tmp;
+
+	mlx_put_image_to_window(fractol->mlx, fractol->win,
+		fractol->img.img, 0, 0);
+	if (fractol->info > 0)
+		draw_info_table(fractol);
+	mlx_string_put(fractol->mlx, fractol->win, 10, 10, 0xFF0000,
+		"Max iterations: ");
+	mlx_string_put(fractol->mlx, fractol->win, 165, 10, 0xFF0000,
+		(tmp = ft_itoa(fractol->depth)));
+	ft_strdel(&tmp);
+}
+
 void			initialize_threads(t_fractol *fractol)
 {
 	int			i;
@@ -85,12 +100,5 @@ void			initialize_threads(t_fractol *fractol)
 	}
 	while (--i >= 0)
 		pthread_join(tid[i], NULL);
-	mlx_put_image_to_window(fractol->mlx, fractol->win,
-		fractol->img.img, 0, 0);
-	if (fractol->info > 0)
-		draw_info_table(fractol);
-	mlx_string_put(fractol->mlx, fractol->win, 10, 10, 0xFF0000,
-		"Max iterations: ");
-	mlx_string_put(fractol->mlx, fractol->win, 165, 10, 0xFF0000,
-		ft_itoa(fractol->depth));
+	draw_image_and_iter(fractol);
 }
