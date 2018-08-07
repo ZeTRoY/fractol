@@ -6,7 +6,7 @@
 #    By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/30 15:24:05 by aroi              #+#    #+#              #
-#    Updated: 2018/08/07 10:47:54 by aroi             ###   ########.fr        #
+#    Updated: 2018/08/07 12:20:51 by aroi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ FILES		=	main \
 				set_julia \
 				set_mandelbrot
 
-INCLUDES	=	-I ./includes -I ./libft
+INCLUDES	=	-I ./includes -I ./libft/includes
 SRC			=	$(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ			=	$(addprefix obj/, $(addsuffix .o, $(FILES)))
 
@@ -45,11 +45,11 @@ obj/%.o: src/%.c
 	@echo "\033[32m...Making some magic...\033[0m"
 
 $(NAME): libft/libft.a mlx $(OBJ)
-	@echo "\033[32mCrafting \033[1mlibft.a\033[0m\033[32m...\033[0m"
 	@$(CC) $(OBJ) -o $(NAME) $(FLAGS) $(FLAGS_PLUS) libft/libft.a
 	@echo "\033[1;32m$(NAME)\033[0m\033[32m is ready to use!\033[0m"
 
 libft/libft.a:
+	@echo "\033[32mCrafting \033[1mlibft.a\033[0m\033[32m...\033[0m"
 	@make -C libft
 
 ifeq ($(OS), Linux)
