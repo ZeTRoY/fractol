@@ -6,7 +6,7 @@
 #    By: aroi <aroi@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/30 15:24:05 by aroi              #+#    #+#              #
-#    Updated: 2018/08/07 12:20:51 by aroi             ###   ########.fr        #
+#    Updated: 2018/08/07 12:42:13 by aroi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,4 +84,4 @@ fclean: clean_mlx
 re: fclean all
 
 .PHONY: all clean
-.NOTPARALLEL: all $(NAME) libft mlx clean clean_mlx fclean re
+.NOTPARALLEL: all $(NAME) libft/libft.a mlx clean clean_mlx fclean re
